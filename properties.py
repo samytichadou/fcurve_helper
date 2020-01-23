@@ -2,7 +2,7 @@ import bpy
 
 
 ## COMMON
-class CurveHelperCommonProperties(bpy.types.PropertyGroup) :
+class FCurveHelperCommonProperties(bpy.types.PropertyGroup) :
     '''name : StringProperty() '''
     mute : bpy.props.BoolProperty(name = "Muted")
     use_restricted_range : bpy.props.BoolProperty(name = "Restrict Frame Range")
@@ -17,7 +17,7 @@ class CurveHelperCommonProperties(bpy.types.PropertyGroup) :
     influence : bpy.props.FloatProperty(name = "Influence", min = 0, max = 1, default = 1)
 
 ## GENERATOR
-class CurveHelperGeneratorProperties(bpy.types.PropertyGroup) :
+class FCurveHelperGeneratorProperties(bpy.types.PropertyGroup) :
     '''name : StringProperty() '''
     use_additive : bpy.props.BoolProperty(name = "Additive")
     mode_items = [
@@ -30,7 +30,7 @@ class CurveHelperGeneratorProperties(bpy.types.PropertyGroup) :
     coefficients : bpy.props.FloatVectorProperty(name = "Coefficients", size = 32)
     
 ## FNGENERATOR
-class CurveHelperFNGeneratorProperties(bpy.types.PropertyGroup) :
+class FCurveHelperFNGeneratorProperties(bpy.types.PropertyGroup) :
     '''name : StringProperty() '''
     amplitude : bpy.props.FloatProperty(name = "Amplitude", default = 1)
     phase_multiplier : bpy.props.FloatProperty(name = "Phase Multiplier", default = 1)
@@ -50,14 +50,14 @@ class CurveHelperFNGeneratorProperties(bpy.types.PropertyGroup) :
     function_type : bpy.props.EnumProperty(name = "Type", items = function_type_items)
 
 ## ENVELOPE
-class CurveHelperEnvelopeProperties(bpy.types.PropertyGroup) :
+class FCurveHelperEnvelopeProperties(bpy.types.PropertyGroup) :
     '''name : StringProperty() '''
     reference_value : bpy.props.FloatProperty(name = "Reference Value")
     default_min : bpy.props.FloatProperty(name = "Min", default = -1)
     default_max : bpy.props.FloatProperty(name = "Max", default = 1)
 
 ## CYCLES
-class CurveHelperCyclesProperties(bpy.types.PropertyGroup) :
+class FCurveHelperCyclesProperties(bpy.types.PropertyGroup) :
     '''name : StringProperty() ''' 
     mode_items = [
         ('NONE', 'No Cycles', ""),
@@ -72,7 +72,7 @@ class CurveHelperCyclesProperties(bpy.types.PropertyGroup) :
     cycles_after : bpy.props.IntProperty(name = "After")
 
 ## NOISE
-class CurveHelperNoiseProperties(bpy.types.PropertyGroup) :
+class FCurveHelperNoiseProperties(bpy.types.PropertyGroup) :
     '''name : StringProperty() ''' 
     blend_items = [
         ('REPLACE', 'Replace', ""),
@@ -89,7 +89,7 @@ class CurveHelperNoiseProperties(bpy.types.PropertyGroup) :
     depth : bpy.props.IntProperty(name = "Depth")
 
 ## LIMITS
-class CurveHelperLimitsProperties(bpy.types.PropertyGroup) :
+class FCurveHelperLimitsProperties(bpy.types.PropertyGroup) :
     '''name : StringProperty() ''' 
     use_min_x : bpy.props.BoolProperty(name = "Minimum X")
     use_min_y : bpy.props.BoolProperty(name = "Minimum Y")
@@ -102,7 +102,7 @@ class CurveHelperLimitsProperties(bpy.types.PropertyGroup) :
     max_y : bpy.props.FloatProperty(name = "Maximum Y")
 
 ## STEPPED    
-class CurveHelperSteppedProperties(bpy.types.PropertyGroup) :
+class FCurveHelperSteppedProperties(bpy.types.PropertyGroup) :
     '''name : StringProperty() '''
     frame_step : bpy.props.FloatProperty(name = "Step Size", default = 2)
     frame_offset : bpy.props.FloatProperty(name = "Offset")

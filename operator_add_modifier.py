@@ -5,9 +5,9 @@ from .functions import *
 
 
 #operator to add modifier if needed
-class CurveHelperAddModifier(bpy.types.Operator):
+class FCurveHelperAddModifier(bpy.types.Operator):
     """Tooltip"""
-    bl_idname = "curvehelper.addmodifier"
+    bl_idname = "fcurvehelper.addmodifier"
     bl_label = "Add or Modify FCurves modifier"
     
     fcurve_type_items = [
@@ -44,7 +44,7 @@ class CurveHelperAddModifier(bpy.types.Operator):
     def draw(self, context):
         wm = context.window_manager
         layout = self.layout
-        common_props = wm.curvehelper_commonproperties[0]
+        common_props = wm.fcurvehelper_commonproperties[0]
         
         ### TODO ### add copy from active
 
@@ -75,9 +75,9 @@ class CurveHelperAddModifier(bpy.types.Operator):
 
     def execute(self, context):
         wm = context.window_manager
-        common_props = wm.curvehelper_commonproperties[0]
+        common_props = wm.fcurvehelper_commonproperties[0]
 
-        if wm.curvehelper_debug: print("CurveHelper --- start add operator") ###debug
+        if wm.fcurvehelper_debug: print("FCurveHelper --- starting add/modify operator") ###debug
         
         for obj in getSelectedObjects(context.scene):
             
@@ -85,7 +85,7 @@ class CurveHelperAddModifier(bpy.types.Operator):
             else: curve_list = getSelectedFCurves(obj)
                 
             for curve in curve_list:
-                if wm.curvehelper_debug: print("CurveHelper --- treating FCurve : " + curve.data_path) ###debug
+                if wm.fcurvehelper_debug: print("FCurveHelper --- treating FCurve : " + curve.data_path) ###debug
                 if not self.modify_if_existing:
                     modifier = curve.modifiers.new(type=self.modifiers_list)
                 else:
@@ -102,13 +102,13 @@ class CurveHelperAddModifier(bpy.types.Operator):
                         modifier = curve.modifiers.new(type = self.modifiers_list)
                 #set modifier keys
                 setPropertiesFromDataset(common_props, modifier)
-                if self.modifiers_list == 'GENERATOR':  setPropertiesFromDataset(wm.curvehelper_generatorproperties[0], modifier)
-                elif self.modifiers_list == 'FNGENERATOR':  setPropertiesFromDataset(wm.curvehelper_fngeneratorproperties[0], modifier)
-                elif self.modifiers_list == 'ENVELOPE':  setPropertiesFromDataset(wm.curvehelper_envelopeproperties[0], modifier)
-                elif self.modifiers_list == 'CYCLES':  setPropertiesFromDataset(wm.curvehelper_cyclesproperties[0], modifier)
-                elif self.modifiers_list == 'NOISE':  setPropertiesFromDataset(wm.curvehelper_noiseproperties[0], modifier)
-                elif self.modifiers_list == 'LIMITS':  setPropertiesFromDataset(wm.curvehelper_limitsproperties[0], modifier)
-                elif self.modifiers_list == 'STEPPED': setPropertiesFromDataset(wm.curvehelper_steppedproperties[0], modifier)
+                if self.modifiers_list == 'GENERATOR':  setPropertiesFromDataset(wm.fcurvehelper_generatorproperties[0], modifier)
+                elif self.modifiers_list == 'FNGENERATOR':  setPropertiesFromDataset(wm.fcurvehelper_fngeneratorproperties[0], modifier)
+                elif self.modifiers_list == 'ENVELOPE':  setPropertiesFromDataset(wm.fcurvehelper_envelopeproperties[0], modifier)
+                elif self.modifiers_list == 'CYCLES':  setPropertiesFromDataset(wm.fcurvehelper_cyclesproperties[0], modifier)
+                elif self.modifiers_list == 'NOISE':  setPropertiesFromDataset(wm.fcurvehelper_noiseproperties[0], modifier)
+                elif self.modifiers_list == 'LIMITS':  setPropertiesFromDataset(wm.fcurvehelper_limitsproperties[0], modifier)
+                elif self.modifiers_list == 'STEPPED': setPropertiesFromDataset(wm.fcurvehelper_steppedproperties[0], modifier)
                 
         ### TODO ### print log
         ### TODO ### return info log

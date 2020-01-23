@@ -3,7 +3,7 @@ import bpy
 
 # COMMON PROPS
 def drawCommonProperties(layout, context):
-    common_props = context.window_manager.curvehelper_commonproperties[0]
+    common_props = context.window_manager.fcurvehelper_commonproperties[0]
     
     row = layout.row(align=False)
     col = row.column(align=True)
@@ -28,7 +28,7 @@ def drawCommonProperties(layout, context):
     
 # GENERATOR PROPS
 def drawGeneratorProperties(layout, context):
-    generator_props = context.window_manager.curvehelper_generatorproperties[0]
+    generator_props = context.window_manager.fcurvehelper_generatorproperties[0]
     
     col = layout.column(align=True)
     col.prop(generator_props, 'mode', text = '')
@@ -70,7 +70,7 @@ def drawGeneratorProperties(layout, context):
     
 # FNGENERATOR PROPS
 def drawFNGeneratorProperties(layout, context):
-    fngenerator_props = context.window_manager.curvehelper_fngeneratorproperties[0]
+    fngenerator_props = context.window_manager.fcurvehelper_fngeneratorproperties[0]
     
     col = layout.column(align=True)
     col.prop(fngenerator_props, 'function_type', text = "")
@@ -84,7 +84,7 @@ def drawFNGeneratorProperties(layout, context):
 
 # ENVELOPE PROPS
 def drawEnvelopeProperties(layout, context):
-    envelope_props = context.window_manager.curvehelper_envelopeproperties[0]
+    envelope_props = context.window_manager.fcurvehelper_envelopeproperties[0]
     
     col = layout.column(align=True)
     col.label(text = "Envelope:")
@@ -96,7 +96,7 @@ def drawEnvelopeProperties(layout, context):
 
 # ENVELOPE PROPS
 def drawCyclesProperties(layout, context):
-    cycles_props = context.window_manager.curvehelper_cyclesproperties[0]
+    cycles_props = context.window_manager.fcurvehelper_cyclesproperties[0]
     
     row = layout.row()
     col = row.column(align=True)
@@ -111,7 +111,7 @@ def drawCyclesProperties(layout, context):
 
 # NOISE PROPS
 def drawNoiseProperties(layout, context):
-    noise_props = context.window_manager.curvehelper_noiseproperties[0]
+    noise_props = context.window_manager.fcurvehelper_noiseproperties[0]
     
     layout.prop(noise_props, "blend_type")
 
@@ -127,7 +127,7 @@ def drawNoiseProperties(layout, context):
 
 # LIMITS PROPS
 def drawLimitsProperties(layout, context):
-    limits_props = context.window_manager.curvehelper_limitsproperties[0]
+    limits_props = context.window_manager.fcurvehelper_limitsproperties[0]
     
     row = layout.row()
     col = row.column()
@@ -149,7 +149,7 @@ def drawLimitsProperties(layout, context):
 
 # STEPPED PROPS
 def drawSteppedProperties(layout, context):
-    stepped_props = context.window_manager.curvehelper_steppedproperties[0]
+    stepped_props = context.window_manager.fcurvehelper_steppedproperties[0]
     
     col = layout.column()
     col.prop(stepped_props, 'frame_step')

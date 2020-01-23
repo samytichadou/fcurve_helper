@@ -46,16 +46,16 @@ from .preferences import *
 # register
 ##################################
 
-classes = (CurveHelperAddModifier,
-            CurveHelperCommonProperties,
-            CurveHelperGeneratorProperties,
-            CurveHelperFNGeneratorProperties,
-            CurveHelperEnvelopeProperties,
-            CurveHelperCyclesProperties,
-            CurveHelperNoiseProperties,
-            CurveHelperLimitsProperties,
-            CurveHelperSteppedProperties,
-            CurveHelperAddonPrefs,
+classes = (FCurveHelperAddModifier,
+            FCurveHelperCommonProperties,
+            FCurveHelperGeneratorProperties,
+            FCurveHelperFNGeneratorProperties,
+            FCurveHelperEnvelopeProperties,
+            FCurveHelperCyclesProperties,
+            FCurveHelperNoiseProperties,
+            FCurveHelperLimitsProperties,
+            FCurveHelperSteppedProperties,
+            FCurveHelperAddonPrefs,
             )
 
 def register():
@@ -66,24 +66,24 @@ def register():
         register_class(cls)
     
     ### PROPS ###
-    bpy.types.WindowManager.curvehelper_commonproperties = \
-        bpy.props.CollectionProperty(type = CurveHelperCommonProperties)
-    bpy.types.WindowManager.curvehelper_generatorproperties = \
-        bpy.props.CollectionProperty(type = CurveHelperGeneratorProperties)
-    bpy.types.WindowManager.curvehelper_fngeneratorproperties = \
-        bpy.props.CollectionProperty(type = CurveHelperFNGeneratorProperties)
-    bpy.types.WindowManager.curvehelper_envelopeproperties = \
-        bpy.props.CollectionProperty(type = CurveHelperEnvelopeProperties)
-    bpy.types.WindowManager.curvehelper_cyclesproperties = \
-        bpy.props.CollectionProperty(type = CurveHelperCyclesProperties)
-    bpy.types.WindowManager.curvehelper_noiseproperties = \
-        bpy.props.CollectionProperty(type = CurveHelperNoiseProperties)
-    bpy.types.WindowManager.curvehelper_limitsproperties = \
-        bpy.props.CollectionProperty(type = CurveHelperLimitsProperties)
-    bpy.types.WindowManager.curvehelper_steppedproperties = \
-        bpy.props.CollectionProperty(type = CurveHelperSteppedProperties)
+    bpy.types.WindowManager.fcurvehelper_commonproperties = \
+        bpy.props.CollectionProperty(type = FCurveHelperCommonProperties)
+    bpy.types.WindowManager.fcurvehelper_generatorproperties = \
+        bpy.props.CollectionProperty(type = FCurveHelperGeneratorProperties)
+    bpy.types.WindowManager.fcurvehelper_fngeneratorproperties = \
+        bpy.props.CollectionProperty(type = FCurveHelperFNGeneratorProperties)
+    bpy.types.WindowManager.fcurvehelper_envelopeproperties = \
+        bpy.props.CollectionProperty(type = FCurveHelperEnvelopeProperties)
+    bpy.types.WindowManager.fcurvehelper_cyclesproperties = \
+        bpy.props.CollectionProperty(type = FCurveHelperCyclesProperties)
+    bpy.types.WindowManager.fcurvehelper_noiseproperties = \
+        bpy.props.CollectionProperty(type = FCurveHelperNoiseProperties)
+    bpy.types.WindowManager.fcurvehelper_limitsproperties = \
+        bpy.props.CollectionProperty(type = FCurveHelperLimitsProperties)
+    bpy.types.WindowManager.fcurvehelper_steppedproperties = \
+        bpy.props.CollectionProperty(type = FCurveHelperSteppedProperties)
     
-    bpy.types.WindowManager.curvehelper_debug = bpy.props.BoolProperty(name = "Debug Toggle", default=True)
+    bpy.types.WindowManager.fcurvehelper_debug = bpy.props.BoolProperty(name = "Debug Toggle", default=True)
 
     ### HANDLER ###
     bpy.app.handlers.load_post.append(fcurvehelper_startup)
@@ -96,16 +96,16 @@ def unregister():
         unregister_class(cls)
 
     ### PROPS ###
-    del bpy.types.WindowManager.curvehelper_commonproperties
-    del bpy.types.WindowManager.curvehelper_generatorproperties
-    del bpy.types.WindowManager.curvehelper_fngeneratorproperties
-    del bpy.types.WindowManager.curvehelper_envelopeproperties
-    del bpy.types.WindowManager.curvehelper_cyclesproperties
-    del bpy.types.WindowManager.curvehelper_noiseproperties
-    del bpy.types.WindowManager.curvehelper_limitsproperties
-    del bpy.types.WindowManager.curvehelper_steppedproperties
+    del bpy.types.WindowManager.fcurvehelper_commonproperties
+    del bpy.types.WindowManager.fcurvehelper_generatorproperties
+    del bpy.types.WindowManager.fcurvehelper_fngeneratorproperties
+    del bpy.types.WindowManager.fcurvehelper_envelopeproperties
+    del bpy.types.WindowManager.fcurvehelper_cyclesproperties
+    del bpy.types.WindowManager.fcurvehelper_noiseproperties
+    del bpy.types.WindowManager.fcurvehelper_limitsproperties
+    del bpy.types.WindowManager.fcurvehelper_steppedproperties
 
-    del bpy.types.WindowManager.curvehelper_debug
+    del bpy.types.WindowManager.fcurvehelper_debug
 
     ### HANDLER
     bpy.app.handlers.load_post.remove(fcurvehelper_startup)

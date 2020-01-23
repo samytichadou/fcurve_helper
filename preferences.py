@@ -4,13 +4,13 @@ import os
 
 addon_name = os.path.basename(os.path.dirname(__file__))
 
-class CurveHelperAddonPrefs(bpy.types.AddonPreferences) :
+class FCurveHelperAddonPrefs(bpy.types.AddonPreferences) :
     bl_idname = addon_name
 
     def draw(self, context) :
         wm = context.window_manager
         layout = self.layout
-        layout.prop(wm, "curvehelper_debug")
+        layout.prop(wm, "fcurvehelper_debug")
             
 
 # get addon preferences
