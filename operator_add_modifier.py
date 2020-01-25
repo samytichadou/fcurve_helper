@@ -17,7 +17,14 @@ class FCurveHelperAddModifier(bpy.types.Operator):
     fcurve_type : bpy.props.EnumProperty(items=fcurve_type_items,
                                             name="Type",
                                             )
-    modify_if_existing : bpy.props.BoolProperty(name="Modify Existing Modifier")
+    add_mode_items = [
+        ('ADD_MODIFY', 'Add or Modify Existing', ""),
+        ('MODIFY', 'Modify Existing Only', ""),
+        ('ADD', 'Add', ""),
+        ]                                            
+    add_mode : bpy.props.EnumProperty(items=add_mode_items,
+                                            name="Mode",
+                                            )
     modifiers_items = [
         ('GENERATOR', 'Generator', ""),
         ('FNGENERATOR', 'Built-In Function', ""),
@@ -51,13 +58,15 @@ class FCurveHelperAddModifier(bpy.types.Operator):
         ### TODO ### show affected fcurves
         
         layout.prop(self, 'fcurve_type')
-        layout.prop(self, 'modify_if_existing')
+        layout.prop(self, 'add_mode')
         
         col = layout.column(align=True)
         box = col.box()
         row = box.row(align=False)
         row.prop(self, 'modifiers_list', text = "")
         row.prop(common_props, 'mute')
+        op = row.operator("fcurvehelper.copy_active_modifier")
+        op.fcurve_type = self.fcurve_type
         
         ### MODIFIER PROPERTIES ###
         box = col.box()
@@ -86,8 +95,10 @@ class FCurveHelperAddModifier(bpy.types.Operator):
                 
             for curve in curve_list:
                 if wm.fcurvehelper_debug: print("FCurveHelper --- treating FCurve : " + curve.data_path) ###debug
-                if not self.modify_if_existing:
+                # add mode
+                if self.add_mode == 'ADD':
                     modifier = curve.modifiers.new(type=self.modifiers_list)
+                # add and modify mode
                 else:
                     if curve.modifiers:
                         chk_mod = 0
@@ -96,10 +107,11 @@ class FCurveHelperAddModifier(bpy.types.Operator):
                                 modifier = mod
                                 chk_mod = 1
                                 break
-                        if chk_mod == 0:
+                        if chk_mod == 0 and self.add_mode == 'ADD_MODIFY':
                             modifier = curve.modifiers.new(type = self.modifiers_list)
                     else: 
-                        modifier = curve.modifiers.new(type = self.modifiers_list)
+                        if self.add_mode == 'ADD_MODIFY':
+                            modifier = curve.modifiers.new(type = self.modifiers_list)
                 #set modifier keys
                 setPropertiesFromDataset(common_props, modifier)
                 if self.modifiers_list == 'GENERATOR':  setPropertiesFromDataset(wm.fcurvehelper_generatorproperties[0], modifier)
