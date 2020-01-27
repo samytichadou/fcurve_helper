@@ -17,19 +17,7 @@ class FCurveHelperRemoveModifier(bpy.types.Operator):
                                             name="Type",
                                             )
     remove_all : bpy.props.BoolProperty(name="Remove All")
-    modifiers_items = [
-        ('GENERATOR', 'Generator', ""),
-        ('FNGENERATOR', 'Built-In Function', ""),
-        ('ENVELOPE', 'Envelope', ""),
-        ('CYCLES', 'Cycles', ""),
-        ('NOISE', 'Noise', ""),
-        ('LIMITS', 'Limits', ""),
-        ('STEPPED', 'Stepped Interpolation', ""),
-        ]
-    modifiers_list : bpy.props.EnumProperty(items=modifiers_items,
-                                            name="Modifiers",
-                                            )
-
+    
     @classmethod
     def poll(cls, context):
         return context.active_object is not None
@@ -43,7 +31,6 @@ class FCurveHelperRemoveModifier(bpy.types.Operator):
     def draw(self, context):
         wm = context.window_manager
         layout = self.layout
-        common_props = wm.fcurvehelper_commonproperties[0]
         
         ### TODO ### show affected fcurves
         
@@ -52,14 +39,13 @@ class FCurveHelperRemoveModifier(bpy.types.Operator):
         col = layout.column(align=True)
         box = col.box()
         row = box.row(align=False)
-        row.prop(self, 'modifiers_list', text = "")
+        row.prop(wm, 'fcurvehelper_modifiers_list', text = "")
         row.prop(self, 'remove_all')
         op = row.operator("fcurvehelper.copy_active_modifier", text = "Copy Active")
         op.fcurve_type = self.fcurve_type
 
     def execute(self, context):
         wm = context.window_manager
-        common_props = wm.fcurvehelper_commonproperties[0]
 
         if wm.fcurvehelper_debug: print("FCurveHelper --- starting remove operator") ###debug
         
@@ -76,7 +62,7 @@ class FCurveHelperRemoveModifier(bpy.types.Operator):
                             if wm.fcurvehelper_debug: print("FCurveHelper --- %s removed" % mod.type) ###debug
                             curve.modifiers.remove(mod)
                         else:
-                            if mod.type == self.modifiers_list:
+                            if mod.type == wm.fcurvehelper_modifiers_list:
                                 if wm.fcurvehelper_debug: print("FCurveHelper --- %s removed" % mod.type) ###debug
                                 curve.modifiers.remove(mod)
                 

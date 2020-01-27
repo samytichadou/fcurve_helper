@@ -89,6 +89,19 @@ def register():
     
     bpy.types.WindowManager.fcurvehelper_debug = bpy.props.BoolProperty(name = "Debug Toggle", default=True)
 
+    modifiers_items = [
+        ('GENERATOR', 'Generator', ""),
+        ('FNGENERATOR', 'Built-In Function', ""),
+        ('ENVELOPE', 'Envelope', ""),
+        ('CYCLES', 'Cycles', ""),
+        ('NOISE', 'Noise', ""),
+        ('LIMITS', 'Limits', ""),
+        ('STEPPED', 'Stepped Interpolation', ""),
+        ]
+    bpy.types.WindowManager.fcurvehelper_modifiers_list = bpy.props.EnumProperty(items=modifiers_items,
+                                            name="Modifiers",
+                                            )
+
     ### HANDLER ###
     bpy.app.handlers.load_post.append(fcurvehelper_startup)
 
@@ -108,6 +121,7 @@ def unregister():
     del bpy.types.WindowManager.fcurvehelper_noiseproperties
     del bpy.types.WindowManager.fcurvehelper_limitsproperties
     del bpy.types.WindowManager.fcurvehelper_steppedproperties
+    del bpy.types.WindowManager.fcurvehelper_modifiers_list
 
     del bpy.types.WindowManager.fcurvehelper_debug
 
