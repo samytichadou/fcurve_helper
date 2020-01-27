@@ -6,7 +6,7 @@ class FCurveHelperCopyActiveModifier(bpy.types.Operator):
     bl_idname = "fcurvehelper.copy_active_modifier"
     bl_label = "Copy Active Modifier"
 
-    fcurve_type = bpy.props.StringProperty()
+    fcurve_type : bpy.props.StringProperty()
 
     @classmethod
     def poll(cls, context):
