@@ -41,6 +41,9 @@ from .startup_handler import fcurvehelper_startup
 from .properties import *
 from .operator_add_modifier import *
 from .operator_copy_active_modifier import *
+from .operator_remove_modifier import *
+from .operator_remove_modifier_from_inspector import *
+from .gui import *
 from .preferences import *
 
 
@@ -58,6 +61,10 @@ classes = (FCurveHelperAddModifier,
             FCurveHelperSteppedProperties,
             FCurveHelperAddonPrefs,
             FCurveHelperCopyActiveModifier,
+            FCurveHelperRemoveModifier,
+            FCurveHelperPanel,
+            FCurveHelperInspectorSubPanel,
+            FCurveHelperRemoveModifierInspector,
             )
 
 def register():
@@ -87,6 +94,29 @@ def register():
     
     bpy.types.WindowManager.fcurvehelper_debug = bpy.props.BoolProperty(name = "Debug Toggle", default=True)
 
+    modifiers_items = [
+        ('GENERATOR', 'Generator', ""),
+        ('FNGENERATOR', 'Built-In Function', ""),
+        ('ENVELOPE', 'Envelope', ""),
+        ('CYCLES', 'Cycles', ""),
+        ('NOISE', 'Noise', ""),
+        ('LIMITS', 'Limits', ""),
+        ('STEPPED', 'Stepped Interpolation', ""),
+        ]
+    bpy.types.WindowManager.fcurvehelper_modifiers_list = bpy.props.EnumProperty(items=modifiers_items,
+                                            name="Modifiers",
+                                            )
+    fcurve_type_items = [
+        ('AUTO', 'Automatic', ""),
+        ('BONE', 'Bone', ""),
+        ('OBJECT', 'Object', ""),
+        ]
+    bpy.types.WindowManager.fcurvehelper_fcurve_type = bpy.props.EnumProperty(items=fcurve_type_items,
+                                            name="Type",
+                                            )
+
+    bpy.types.WindowManager.fcurvehelper_show_only_selected_bones = bpy.props.BoolProperty(name = "Only Selected Bones")
+
     ### HANDLER ###
     bpy.app.handlers.load_post.append(fcurvehelper_startup)
 
@@ -106,6 +136,9 @@ def unregister():
     del bpy.types.WindowManager.fcurvehelper_noiseproperties
     del bpy.types.WindowManager.fcurvehelper_limitsproperties
     del bpy.types.WindowManager.fcurvehelper_steppedproperties
+    del bpy.types.WindowManager.fcurvehelper_modifiers_list
+    del bpy.types.WindowManager.fcurvehelper_fcurve_type
+    del bpy.types.WindowManager.fcurvehelper_show_only_selected_bones
 
     del bpy.types.WindowManager.fcurvehelper_debug
 

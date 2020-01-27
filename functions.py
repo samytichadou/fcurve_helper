@@ -9,30 +9,56 @@ def getSelectedObjects(scene):
             object_list.append(obj)
     return object_list
 
-# return armature active bones fcurves
+# return selected armature active bones fcurves
 def getSelectedBonesFCurves(object):
     curves_list = []
     if object.animation_data:
-        if object.type == 'ARMATURE':
-            bones_list = []
-            for bone in object.data.bones:
-                if bone.select:
-                    bones_list.append(bone.name)
-            for curve in object.animation_data.action.fcurves:
-                if curve.select:
-                    if curve.data_path.startswith("pose.bones"):
-                        for bone in bones_list:
-                            if bone in curve.data_path:
-                                curves_list.append(curve)                            
+        try:
+            if object.type == 'ARMATURE':
+                bones_list = []
+                for bone in object.data.bones:
+                    if bone.select:
+                        bones_list.append(bone.name)
+                for curve in object.animation_data.action.fcurves:
+                    if curve.select:
+                        if curve.data_path.startswith("pose.bones"):
+                            for bone in bones_list:
+                                if bone in curve.data_path:
+                                    curves_list.append(curve)                            
+        except AttributeError: pass
     return curves_list
 
-# return bones fcurves
+# return all armature active bones fcurves
+def getFCurvesFromBone(bone, object):
+    curves_list = []
+    try:
+        for curve in object.animation_data.action.fcurves:
+            if curve.data_path.startswith("pose.bones"):
+                if bone.name in curve.data_path:
+                    curves_list.append(curve)
+    except AttributeError: pass                     
+    return curves_list
+
+# return selected objects fcurves
 def getSelectedFCurves(object):
     curves_list = []
     if object.animation_data:
-        for curve in object.animation_data.action.fcurves:
-            if curve.select:
-                curves_list.append(curve)
+        try:
+            for curve in object.animation_data.action.fcurves:
+                if curve.select and not curve.data_path.startswith("pose.bones"):
+                    curves_list.append(curve)
+        except AttributeError: pass
+    return curves_list
+
+# return objects fcurves
+def getFCurves(object):
+    curves_list = []
+    if object.animation_data :
+        try:
+            for curve in object.animation_data.action.fcurves:
+                if not curve.data_path.startswith("pose.bones"):
+                    curves_list.append(curve)
+        except AttributeError: pass
     return curves_list
 
 # get props from modifiers

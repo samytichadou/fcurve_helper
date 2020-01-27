@@ -9,14 +9,8 @@ class FCurveHelperAddModifier(bpy.types.Operator):
     """Tooltip"""
     bl_idname = "fcurvehelper.addmodifier"
     bl_label = "Add or Modify FCurves modifier"
-    
-    fcurve_type_items = [
-        ('BONE', 'Bone', ""),
-        ('OBJECT', 'Object', ""),
-        ]
-    fcurve_type : bpy.props.EnumProperty(items=fcurve_type_items,
-                                            name="Type",
-                                            )
+    bl_options = {'UNDO'}
+
     add_mode_items = [
         ('ADD_MODIFY', 'Add or Modify Existing', ""),
         ('MODIFY', 'Modify Existing Only', ""),
@@ -24,18 +18,6 @@ class FCurveHelperAddModifier(bpy.types.Operator):
         ]                                            
     add_mode : bpy.props.EnumProperty(items=add_mode_items,
                                             name="Mode",
-                                            )
-    modifiers_items = [
-        ('GENERATOR', 'Generator', ""),
-        ('FNGENERATOR', 'Built-In Function', ""),
-        ('ENVELOPE', 'Envelope', ""),
-        ('CYCLES', 'Cycles', ""),
-        ('NOISE', 'Noise', ""),
-        ('LIMITS', 'Limits', ""),
-        ('STEPPED', 'Stepped Interpolation', ""),
-        ]
-    modifiers_list : bpy.props.EnumProperty(items=modifiers_items,
-                                            name="Modifiers",
                                             )
 
     @classmethod
@@ -53,30 +35,28 @@ class FCurveHelperAddModifier(bpy.types.Operator):
         layout = self.layout
         common_props = wm.fcurvehelper_commonproperties[0]
         
-        ### TODO ### add copy from active
-
         ### TODO ### show affected fcurves
         
-        layout.prop(self, 'fcurve_type')
+        layout.prop(wm, 'fcurvehelper_fcurve_type')
         layout.prop(self, 'add_mode')
         
         col = layout.column(align=True)
         box = col.box()
         row = box.row(align=False)
-        row.prop(self, 'modifiers_list', text = "")
+        row.prop(wm, 'fcurvehelper_modifiers_list', text = "")
         row.prop(common_props, 'mute')
-        op = row.operator("fcurvehelper.copy_active_modifier")
-        op.fcurve_type = self.fcurve_type
+        op = row.operator("fcurvehelper.copy_active_modifier", text = "Copy Active")
+        op.fcurve_type = wm.fcurvehelper_fcurve_type
         
         ### MODIFIER PROPERTIES ###
         box = col.box()
-        if self.modifiers_list == 'GENERATOR': drawGeneratorProperties(box, context)
-        elif self.modifiers_list == 'FNGENERATOR': drawFNGeneratorProperties(box, context)
-        elif self.modifiers_list == 'ENVELOPE': drawEnvelopeProperties(box, context)
-        elif self.modifiers_list == 'CYCLES': drawCyclesProperties(box, context)
-        elif self.modifiers_list == 'NOISE': drawNoiseProperties(box, context)
-        elif self.modifiers_list == 'LIMITS': drawLimitsProperties(box, context)
-        elif self.modifiers_list == 'STEPPED': drawSteppedProperties(box, context)
+        if wm.fcurvehelper_modifiers_list == 'GENERATOR': drawGeneratorProperties(box, context)
+        elif wm.fcurvehelper_modifiers_list == 'FNGENERATOR': drawFNGeneratorProperties(box, context)
+        elif wm.fcurvehelper_modifiers_list == 'ENVELOPE': drawEnvelopeProperties(box, context)
+        elif wm.fcurvehelper_modifiers_list == 'CYCLES': drawCyclesProperties(box, context)
+        elif wm.fcurvehelper_modifiers_list == 'NOISE': drawNoiseProperties(box, context)
+        elif wm.fcurvehelper_modifiers_list == 'LIMITS': drawLimitsProperties(box, context)
+        elif wm.fcurvehelper_modifiers_list == 'STEPPED': drawSteppedProperties(box, context)
             
         ### COMMON PROPERTIES ###
         box = col.box()
@@ -90,37 +70,40 @@ class FCurveHelperAddModifier(bpy.types.Operator):
         
         for obj in getSelectedObjects(context.scene):
             
-            if self.fcurve_type == 'BONE': curve_list = getSelectedBonesFCurves(obj)
+            if wm.fcurvehelper_fcurve_type == 'AUTO':
+                if context.mode == 'POSE': curve_list = getSelectedBonesFCurves(obj)
+                else: curve_list = getSelectedFCurves(obj)
+            elif wm.fcurvehelper_fcurve_type == 'BONE': curve_list = getSelectedBonesFCurves(obj)
             else: curve_list = getSelectedFCurves(obj)
                 
             for curve in curve_list:
                 if wm.fcurvehelper_debug: print("FCurveHelper --- treating FCurve : " + curve.data_path) ###debug
                 # add mode
                 if self.add_mode == 'ADD':
-                    modifier = curve.modifiers.new(type=self.modifiers_list)
+                    modifier = curve.modifiers.new(type=wm.fcurvehelper_modifiers_list)
                 # add and modify mode
                 else:
                     if curve.modifiers:
                         chk_mod = 0
                         for mod in curve.modifiers:
-                            if mod.type == self.modifiers_list:
+                            if mod.type == wm.fcurvehelper_modifiers_list:
                                 modifier = mod
                                 chk_mod = 1
                                 break
                         if chk_mod == 0 and self.add_mode == 'ADD_MODIFY':
-                            modifier = curve.modifiers.new(type = self.modifiers_list)
+                            modifier = curve.modifiers.new(type = wm.fcurvehelper_modifiers_list)
                     else: 
                         if self.add_mode == 'ADD_MODIFY':
-                            modifier = curve.modifiers.new(type = self.modifiers_list)
+                            modifier = curve.modifiers.new(type = wm.fcurvehelper_modifiers_list)
                 #set modifier keys
                 setPropertiesFromDataset(common_props, modifier)
-                if self.modifiers_list == 'GENERATOR':  setPropertiesFromDataset(wm.fcurvehelper_generatorproperties[0], modifier)
-                elif self.modifiers_list == 'FNGENERATOR':  setPropertiesFromDataset(wm.fcurvehelper_fngeneratorproperties[0], modifier)
-                elif self.modifiers_list == 'ENVELOPE':  setPropertiesFromDataset(wm.fcurvehelper_envelopeproperties[0], modifier)
-                elif self.modifiers_list == 'CYCLES':  setPropertiesFromDataset(wm.fcurvehelper_cyclesproperties[0], modifier)
-                elif self.modifiers_list == 'NOISE':  setPropertiesFromDataset(wm.fcurvehelper_noiseproperties[0], modifier)
-                elif self.modifiers_list == 'LIMITS':  setPropertiesFromDataset(wm.fcurvehelper_limitsproperties[0], modifier)
-                elif self.modifiers_list == 'STEPPED': setPropertiesFromDataset(wm.fcurvehelper_steppedproperties[0], modifier)
+                if wm.fcurvehelper_modifiers_list == 'GENERATOR':  setPropertiesFromDataset(wm.fcurvehelper_generatorproperties[0], modifier)
+                elif wm.fcurvehelper_modifiers_list == 'FNGENERATOR':  setPropertiesFromDataset(wm.fcurvehelper_fngeneratorproperties[0], modifier)
+                elif wm.fcurvehelper_modifiers_list == 'ENVELOPE':  setPropertiesFromDataset(wm.fcurvehelper_envelopeproperties[0], modifier)
+                elif wm.fcurvehelper_modifiers_list == 'CYCLES':  setPropertiesFromDataset(wm.fcurvehelper_cyclesproperties[0], modifier)
+                elif wm.fcurvehelper_modifiers_list == 'NOISE':  setPropertiesFromDataset(wm.fcurvehelper_noiseproperties[0], modifier)
+                elif wm.fcurvehelper_modifiers_list == 'LIMITS':  setPropertiesFromDataset(wm.fcurvehelper_limitsproperties[0], modifier)
+                elif wm.fcurvehelper_modifiers_list == 'STEPPED': setPropertiesFromDataset(wm.fcurvehelper_steppedproperties[0], modifier)
                 
         ### TODO ### print log
         ### TODO ### return info log
