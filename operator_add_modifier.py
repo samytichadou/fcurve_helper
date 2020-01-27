@@ -65,7 +65,7 @@ class FCurveHelperAddModifier(bpy.types.Operator):
         row = box.row(align=False)
         row.prop(self, 'modifiers_list', text = "")
         row.prop(common_props, 'mute')
-        op = row.operator("fcurvehelper.copy_active_modifier")
+        op = row.operator("fcurvehelper.copy_active_modifier", text = "Copy Active")
         op.fcurve_type = self.fcurve_type
         
         ### MODIFIER PROPERTIES ###
