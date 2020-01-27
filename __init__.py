@@ -113,7 +113,7 @@ def register():
                                             name="Type",
                                             )
 
-    bpy.types.WindowManager.fcurvehelper_show_only_selected_bones = bpy.props.BoolProperty(name = "Only Selected")
+    bpy.types.WindowManager.fcurvehelper_show_only_selected_bones = bpy.props.BoolProperty(name = "Only Selected Bones")
 
     ### HANDLER ###
     bpy.app.handlers.load_post.append(fcurvehelper_startup)
