@@ -21,23 +21,30 @@ class FCurveHelperPanel(bpy.types.Panel):
 
 
 # fcurves inspector draw functions
-def drawModifier(layout, modifier):
+def drawModifier(layout, modifier, mod_index, obj, curve):
     row = layout.row(align=True)
     row.label(icon = 'MODIFIER_ON')
     row.label(text = modifier.type)
+    op = row.operator('fcurvehelper.removemodifierinspector', text = "", icon = 'X')
+    op.object_name = obj.name
+    op.fcurve_datapath = curve.data_path
+    op.fcurve_arrayindex = curve.array_index
+    op.modifier_index = mod_index
 
-def drawCurve(layout, curve):
+def drawCurve(layout, curve, obj):
     row = layout.row(align=True)
     
     row.label(icon = 'GRAPH')
     row.label(text = curve.data_path + " " + str(curve.array_index))
 
     if curve.modifiers:
+        mod_index = -1
         col = layout.column(align=True)
         for mod in curve.modifiers:
+            mod_index += 1
             box = col.box()
             #box.scale_y = 0.75
-            drawModifier(box, mod)
+            drawModifier(box, mod, mod_index, obj, curve)
 
 def drawCurveInspectorBone(context, layout):
     wm = context.window_manager
@@ -59,7 +66,7 @@ def drawCurveInspectorBone(context, layout):
                         for curve in curve_list:
                             box = col.box()
                             box.scale_y = 0.5
-                            drawCurve(box, curve)
+                            drawCurve(box, curve, obj)
 
 def drawCurveInspectorObject(context, layout):
     for obj in getSelectedObjects(context.scene):
@@ -71,7 +78,7 @@ def drawCurveInspectorObject(context, layout):
             for curve in curve_list:
                 box = col.box()
                 box.scale_y = 0.5
-                drawCurve(box, curve)
+                drawCurve(box, curve, obj)
 
 class FCurveHelperInspectorSubPanel(bpy.types.Panel):
     bl_label = "FCurves Inspector"
