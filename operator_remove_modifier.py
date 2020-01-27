@@ -1,6 +1,6 @@
 import bpy
 
-from .functions import createDummyProperties, getSelectedObjects, getSelectedBonesFCurves, getSelectedFCurves, redrawContextAreas
+from .functions import getSelectedObjects, getSelectedBonesFCurves, getSelectedFCurves, redrawContextAreas
 
 
 #operator to remove modifier
@@ -15,9 +15,6 @@ class FCurveHelperRemoveModifier(bpy.types.Operator):
     @classmethod
     def poll(cls, context):
         return context.active_object is not None
-
-    def __init__(self):
-        createDummyProperties()
     
     def invoke(self, context, event):
         return context.window_manager.invoke_props_dialog(self)
