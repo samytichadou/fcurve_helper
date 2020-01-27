@@ -62,6 +62,7 @@ classes = (FCurveHelperAddModifier,
             FCurveHelperCopyActiveModifier,
             FCurveHelperRemoveModifier,
             FCurveHelperPanel,
+            FCurveHelperInspectorSubPanel,
             )
 
 def register():
@@ -112,6 +113,8 @@ def register():
                                             name="Type",
                                             )
 
+    bpy.types.WindowManager.fcurvehelper_show_only_selected_bones = bpy.props.BoolProperty(name = "Only Selected")
+
     ### HANDLER ###
     bpy.app.handlers.load_post.append(fcurvehelper_startup)
 
@@ -133,6 +136,7 @@ def unregister():
     del bpy.types.WindowManager.fcurvehelper_steppedproperties
     del bpy.types.WindowManager.fcurvehelper_modifiers_list
     del bpy.types.WindowManager.fcurvehelper_fcurve_type
+    del bpy.types.WindowManager.fcurvehelper_show_only_selected_bones
 
     del bpy.types.WindowManager.fcurvehelper_debug
 
