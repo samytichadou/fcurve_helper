@@ -8,6 +8,7 @@ class FCurveHelperRemoveModifier(bpy.types.Operator):
     """Tooltip"""
     bl_idname = "fcurvehelper.removemodifier"
     bl_label = "Remove FCurves modifier"
+    bl_options = {'UNDO'}
     
     remove_all : bpy.props.BoolProperty(name="Remove All")
     

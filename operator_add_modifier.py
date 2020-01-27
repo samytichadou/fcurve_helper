@@ -9,6 +9,7 @@ class FCurveHelperAddModifier(bpy.types.Operator):
     """Tooltip"""
     bl_idname = "fcurvehelper.addmodifier"
     bl_label = "Add or Modify FCurves modifier"
+    bl_options = {'UNDO'}
 
     add_mode_items = [
         ('ADD_MODIFY', 'Add or Modify Existing', ""),
