@@ -41,6 +41,7 @@ from .startup_handler import fcurvehelper_startup
 from .properties import *
 from .operator_add_modifier import *
 from .operator_copy_active_modifier import *
+from .operator_remove_modifier import *
 from .preferences import *
 
 
@@ -58,6 +59,7 @@ classes = (FCurveHelperAddModifier,
             FCurveHelperSteppedProperties,
             FCurveHelperAddonPrefs,
             FCurveHelperCopyActiveModifier,
+            FCurveHelperRemoveModifier,
             )
 
 def register():
