@@ -103,6 +103,14 @@ def register():
     bpy.types.WindowManager.fcurvehelper_modifiers_list = bpy.props.EnumProperty(items=modifiers_items,
                                             name="Modifiers",
                                             )
+    fcurve_type_items = [
+        ('AUTO', 'Automatic', ""),
+        ('BONE', 'Bone', ""),
+        ('OBJECT', 'Object', ""),
+        ]
+    bpy.types.WindowManager.fcurvehelper_fcurve_type = bpy.props.EnumProperty(items=fcurve_type_items,
+                                            name="Type",
+                                            )
 
     ### HANDLER ###
     bpy.app.handlers.load_post.append(fcurvehelper_startup)
@@ -124,6 +132,7 @@ def unregister():
     del bpy.types.WindowManager.fcurvehelper_limitsproperties
     del bpy.types.WindowManager.fcurvehelper_steppedproperties
     del bpy.types.WindowManager.fcurvehelper_modifiers_list
+    del bpy.types.WindowManager.fcurvehelper_fcurve_type
 
     del bpy.types.WindowManager.fcurvehelper_debug
 

@@ -12,7 +12,7 @@ class FCurveHelperPanel(bpy.types.Panel):
         layout = self.layout
 
         row = layout.row()
-        row.operator('fcurvehelper.addmodifier')
+        row.operator('fcurvehelper.addmodifier', icon = 'ADD')
 
         row = layout.row()
-        row.operator('fcurvehelper.removemodifier')
+        row.operator('fcurvehelper.removemodifier', icon = 'REMOVE')

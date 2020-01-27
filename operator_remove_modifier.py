@@ -9,13 +9,6 @@ class FCurveHelperRemoveModifier(bpy.types.Operator):
     bl_idname = "fcurvehelper.removemodifier"
     bl_label = "Remove FCurves modifier"
     
-    fcurve_type_items = [
-        ('BONE', 'Bone', ""),
-        ('OBJECT', 'Object', ""),
-        ]
-    fcurve_type : bpy.props.EnumProperty(items=fcurve_type_items,
-                                            name="Type",
-                                            )
     remove_all : bpy.props.BoolProperty(name="Remove All")
     
     @classmethod
@@ -34,7 +27,7 @@ class FCurveHelperRemoveModifier(bpy.types.Operator):
         
         ### TODO ### show affected fcurves
         
-        layout.prop(self, 'fcurve_type')
+        layout.prop(wm, 'fcurvehelper_fcurve_type')
         
         col = layout.column(align=True)
         box = col.box()
@@ -42,7 +35,7 @@ class FCurveHelperRemoveModifier(bpy.types.Operator):
         row.prop(wm, 'fcurvehelper_modifiers_list', text = "")
         row.prop(self, 'remove_all')
         op = row.operator("fcurvehelper.copy_active_modifier", text = "Copy Active")
-        op.fcurve_type = self.fcurve_type
+        op.fcurve_type = wm.fcurvehelper_fcurve_type
 
     def execute(self, context):
         wm = context.window_manager
@@ -51,7 +44,10 @@ class FCurveHelperRemoveModifier(bpy.types.Operator):
         
         for obj in getSelectedObjects(context.scene):
             
-            if self.fcurve_type == 'BONE': curve_list = getSelectedBonesFCurves(obj)
+            if wm.fcurvehelper_fcurve_type == 'AUTO':
+                if context.mode == 'POSE': curve_list = getSelectedBonesFCurves(obj)
+                else: curve_list = getSelectedFCurves(obj)
+            elif wm.fcurvehelper_fcurve_type == 'BONE': curve_list = getSelectedBonesFCurves(obj)
             else: curve_list = getSelectedFCurves(obj)
                 
             for curve in curve_list:

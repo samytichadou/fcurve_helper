@@ -26,12 +26,12 @@ def getSelectedBonesFCurves(object):
                                 curves_list.append(curve)                            
     return curves_list
 
-# return bones fcurves
+# return objects fcurves
 def getSelectedFCurves(object):
     curves_list = []
     if object.animation_data:
         for curve in object.animation_data.action.fcurves:
-            if curve.select:
+            if curve.select and not curve.data_path.startswith("pose.bones"):
                 curves_list.append(curve)
     return curves_list
 
