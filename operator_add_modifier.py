@@ -53,8 +53,6 @@ class FCurveHelperAddModifier(bpy.types.Operator):
         layout = self.layout
         common_props = wm.fcurvehelper_commonproperties[0]
         
-        ### TODO ### add copy from active
-
         ### TODO ### show affected fcurves
         
         layout.prop(self, 'fcurve_type')
