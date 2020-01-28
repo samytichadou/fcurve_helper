@@ -115,3 +115,20 @@ def createDummyProperties():
         wm.fcurvehelper_limitsproperties.add()
         chk_creation = 1
     if chk_creation == 1 and wm.fcurvehelper_debug: print("FCurveHelper --- dummy properties created") ###debug
+
+# returning proper f curve from object, index and array
+def returnFCurve(object, data_path, array_index):
+    if object.animation_data:
+        try:
+            for curve in object.animation_data.action.fcurves:
+                if curve.data_path == data_path and curve.array_index == array_index:
+                    return curve
+        except AttributeError:
+            pass
+
+# get active modifier from curve
+def getActiveModifier(curve):
+    if curve.modifiers:
+        for mod in curve.modifiers:
+            if mod.active:
+                return mod

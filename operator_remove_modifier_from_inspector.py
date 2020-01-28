@@ -1,6 +1,6 @@
 import bpy
 
-from .functions import createDummyProperties, getSelectedObjects, getSelectedBonesFCurves, getSelectedFCurves, redrawContextAreas
+from .functions import createDummyProperties, getSelectedObjects, getSelectedBonesFCurves, getSelectedFCurves, redrawContextAreas, returnFCurve
 
 
 #operator to remove modifier
@@ -25,18 +25,18 @@ class FCurveHelperRemoveModifierInspector(bpy.types.Operator):
         if wm.fcurvehelper_debug: print("FCurveHelper --- starting remove operator from inspector") ###debug
 
         obj = bpy.data.objects[self.object_name]
+        if returnFCurve(obj, self.fcurve_datapath, self.fcurve_arrayindex):
+            curve = returnFCurve(obj, self.fcurve_datapath, self.fcurve_arrayindex )
+            modifier = curve.modifiers[self.modifier_index]
 
-        for curve in obj.animation_data.action.fcurves:
-            if curve.data_path == self.fcurve_datapath and curve.array_index == self.fcurve_arrayindex:
-                modifier = curve.modifiers[self.modifier_index]
-                if wm.fcurvehelper_debug: print("FCurveHelper --- %s removing" % modifier.type) ###debug
-                curve.modifiers.remove(modifier)
-                curve.modifiers.update()
-                break
+            if wm.fcurvehelper_debug: print("FCurveHelper --- %s removing" % modifier.type) ###debug
+
+            curve.modifiers.remove(modifier)
+            curve.modifiers.update()
                                                     
         ### TODO ### print log
         ### TODO ### return info log
-        
+
         redrawContextAreas(context)
         context.scene.frame_current = context.scene.frame_current
                     

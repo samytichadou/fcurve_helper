@@ -2,6 +2,7 @@ import bpy
 
 from .functions import getSelectedObjects, getFCurvesFromBone, getFCurves
 
+### PANEL ###
 
 class FCurveHelperPanel(bpy.types.Panel):
     bl_label = "FCurves Helper"
@@ -19,13 +20,18 @@ class FCurveHelperPanel(bpy.types.Panel):
         row = layout.row()
         row.operator('fcurvehelper.removemodifier', icon = 'REMOVE')
 
+### INSPECTOR ###
 
 # fcurves inspector draw functions
 def drawModifier(layout, modifier, mod_index, obj, curve):
     row = layout.row(align=True)
     row.label(icon = 'MODIFIER_ON')
+    row.prop(modifier, 'active', text="", emboss=False)
     row.label(text = modifier.type)
-    op = row.operator('fcurvehelper.removemodifierinspector', text = "", icon = 'X')
+
+    row.prop(modifier, 'mute', text="", invert_checkbox=True, emboss=False)
+
+    op = row.operator('fcurvehelper.removemodifierinspector', text = "", icon = 'X', emboss=False)
     op.object_name = obj.name
     op.fcurve_datapath = curve.data_path
     op.fcurve_arrayindex = curve.array_index
@@ -34,8 +40,25 @@ def drawModifier(layout, modifier, mod_index, obj, curve):
 def drawCurve(layout, curve, obj):
     row = layout.row(align=True)
     
-    row.label(icon = 'GRAPH')
+    #row.label(icon = 'GRAPH')
+    #hide
+    if curve.hide: icon = 'HIDE_ON'
+    else: icon = 'HIDE_OFF'
+    row.prop(curve, 'hide', text="", icon=icon, emboss=False)
+    #selection state
+    if curve.select: icon = 'RESTRICT_SELECT_OFF'
+    else: icon = 'RESTRICT_SELECT_ON'
+    row.prop(curve, 'select', text="", icon=icon, toggle=False, emboss=False)
+    #name
     row.label(text = curve.data_path + " " + str(curve.array_index))
+    #mute
+    if curve.mute: icon = 'CHECKBOX_DEHLT'
+    else: icon = 'CHECKBOX_HLT'
+    row.prop(curve, 'mute', text="", icon=icon, emboss=False)
+    #lock
+    if curve.lock: icon = 'LOCKED'
+    else: icon = 'UNLOCKED'
+    row.prop(curve, 'lock', text="", icon=icon, emboss=False)
 
     if curve.modifiers:
         mod_index = -1
@@ -57,28 +80,53 @@ def drawCurveInspectorBone(context, layout):
                         and bone.select
                         )
                 ):
-                    row = layout.row(align=True)
-                    row.label(text = obj.name, icon = 'TRIA_RIGHT')
-                    row.label(text = bone.name, icon = 'BONE_DATA')
                     curve_list = getFCurvesFromBone(bone, obj)
                     if curve_list:
-                        col = layout.column(align=True)
-                        for curve in curve_list:
-                            box = col.box()
-                            box.scale_y = 0.5
-                            drawCurve(box, curve, obj)
+
+                        chk_display_obj = 0
+                        if wm.fcurvehelper_show_only_modifiers:
+                            for curve in curve_list:
+                                if curve.modifiers: 
+                                    chk_display_obj = 1
+                                    break
+                        else :
+                            chk_display_obj = 1
+
+                        if chk_display_obj:
+                            row = layout.row(align=True)
+                            row.label(text = obj.name, icon = 'TRIA_RIGHT')
+                            row.label(text = bone.name, icon = 'BONE_DATA')
+                            col = layout.column(align=True)
+
+                            for curve in curve_list:
+                                if wm.fcurvehelper_show_only_modifiers:
+                                    if curve.modifiers:
+                                        box = col.box()
+                                        box.scale_y = 0.5
+                                        drawCurve(box, curve, obj)
+                                else:
+                                    box = col.box()
+                                    box.scale_y = 0.5
+                                    drawCurve(box, curve, obj)
 
 def drawCurveInspectorObject(context, layout):
+    wm = context.window_manager
     for obj in getSelectedObjects(context.scene):
-        row = layout.row(align=True)
-        row.label(text = obj.name, icon = 'TRIA_RIGHT')
         curve_list = getFCurves(obj)
         if curve_list:
+            row = layout.row(align=True)
+            row.label(text = obj.name, icon = 'TRIA_RIGHT')
             col = layout.column(align=True)
             for curve in curve_list:
-                box = col.box()
-                box.scale_y = 0.5
-                drawCurve(box, curve, obj)
+                if wm.fcurvehelper_show_only_modifiers:
+                    if curve.modifiers:
+                        box = col.box()
+                        box.scale_y = 0.5
+                        drawCurve(box, curve, obj)
+                else:
+                    box = col.box()
+                    box.scale_y = 0.5
+                    drawCurve(box, curve, obj)
 
 class FCurveHelperInspectorSubPanel(bpy.types.Panel):
     bl_label = "FCurves Inspector"
@@ -99,6 +147,7 @@ class FCurveHelperInspectorSubPanel(bpy.types.Panel):
         layout = self.layout
         row = layout.row(align=True)
         row.prop(wm, 'fcurvehelper_fcurve_type')
+        row.prop(wm, 'fcurvehelper_show_only_modifiers', text="", icon="MODIFIER_ON")
         split = row.split()
         split.prop(wm, 'fcurvehelper_show_only_selected_bones', text = "", icon = 'GROUP_BONE')
                 
