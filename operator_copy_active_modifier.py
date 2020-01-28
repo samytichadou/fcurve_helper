@@ -11,8 +11,10 @@ class FCurveHelperCopyActiveModifier(bpy.types.Operator):
 
     @classmethod
     def poll(cls, context):
-        return context.active_object is not None
+        return context.area.type == 'GRAPH_EDITOR' and context.active_editable_fcurve is not None
 
     def execute(self, context):
         print(self.fcurve_type)
+        print(context.active_editable_fcurve.data_path)
+        print(context.active_editable_fcurve.array_index)
         return {'FINISHED'}
