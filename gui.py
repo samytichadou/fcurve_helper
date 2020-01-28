@@ -100,7 +100,7 @@ class FCurveHelperInspectorSubPanel(bpy.types.Panel):
         row = layout.row(align=True)
         row.prop(wm, 'fcurvehelper_fcurve_type')
         split = row.split()
-        split.prop(wm, 'fcurvehelper_show_only_selected_bones', text = "", icon = 'RESTRICT_SELECT_OFF')
+        split.prop(wm, 'fcurvehelper_show_only_selected_bones', text = "", icon = 'GROUP_BONE')
                 
         if curve_type == 'OBJECT':
             split.enabled = False
