@@ -7,8 +7,8 @@ addon_name = os.path.basename(os.path.dirname(__file__))
 class FCurveHelperAddonPrefs(bpy.types.AddonPreferences) :
     bl_idname = addon_name
 
-    inspector_curve_size : bpy.props.FloatProperty(name="Curve Size in Inspector", min=0.1, max=1, default=0.5)
-    inspector_modifier_size : bpy.props.FloatProperty(name="Curve Size in Inspector", min=0.1, max=2, default=1)
+    inspector_curve_size : bpy.props.FloatProperty(name="Curves Size in Inspector", min=0.1, max=1, default=0.5)
+    inspector_modifier_size : bpy.props.FloatProperty(name="Modifiers Size in Inspector", min=0.1, max=2, default=1)
 
     def draw(self, context) :
         wm = context.window_manager
