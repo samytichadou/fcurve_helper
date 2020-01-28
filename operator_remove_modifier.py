@@ -55,13 +55,17 @@ class FCurveHelperRemoveModifier(bpy.types.Operator):
                         if self.remove_all:
                             if wm.fcurvehelper_debug: print("FCurveHelper --- %s removed" % mod.type) ###debug
                             curve.modifiers.remove(mod)
+                            curve.modifiers.update()
                         else:
                             if mod.type == wm.fcurvehelper_modifiers_list:
                                 if wm.fcurvehelper_debug: print("FCurveHelper --- %s removed" % mod.type) ###debug
                                 curve.modifiers.remove(mod)
+                                curve.modifiers.update()
                 
         ### TODO ### print log
         ### TODO ### return info log
+
         redrawContextAreas(context)
+        context.scene.frame_current = context.scene.frame_current
                     
         return {'FINISHED'}

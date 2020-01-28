@@ -31,11 +31,13 @@ class FCurveHelperRemoveModifierInspector(bpy.types.Operator):
                 modifier = curve.modifiers[self.modifier_index]
                 if wm.fcurvehelper_debug: print("FCurveHelper --- %s removing" % modifier.type) ###debug
                 curve.modifiers.remove(modifier)
-
+                curve.modifiers.update()
                 break
                                                     
         ### TODO ### print log
         ### TODO ### return info log
+        
         redrawContextAreas(context)
+        context.scene.frame_current = context.scene.frame_current
                     
         return {'FINISHED'}
