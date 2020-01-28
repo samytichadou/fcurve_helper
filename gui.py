@@ -1,6 +1,7 @@
 import bpy
 
 from .functions import getSelectedObjects, getFCurvesFromBone, getFCurves
+from .preferences import get_addon_preferences
 
 ### PANEL ###
 
@@ -38,6 +39,9 @@ def drawModifier(layout, modifier, mod_index, obj, curve):
     op.modifier_index = mod_index
 
 def drawCurve(layout, curve, obj):
+    prefs = get_addon_preferences()
+    modifier_size = prefs.inspector_modifier_size
+    
     row = layout.row(align=True)
     
     #row.label(icon = 'GRAPH')
@@ -66,10 +70,12 @@ def drawCurve(layout, curve, obj):
         for mod in curve.modifiers:
             mod_index += 1
             box = col.box()
-            #box.scale_y = 0.75
+            box.scale_y = modifier_size
             drawModifier(box, mod, mod_index, obj, curve)
 
 def drawCurveInspectorBone(context, layout):
+    prefs = get_addon_preferences()
+    curve_size = prefs.inspector_curve_size
     wm = context.window_manager
     for obj in getSelectedObjects(context.scene):
         if obj.type == 'ARMATURE':
@@ -102,14 +108,16 @@ def drawCurveInspectorBone(context, layout):
                                 if wm.fcurvehelper_show_only_modifiers:
                                     if curve.modifiers:
                                         box = col.box()
-                                        box.scale_y = 0.5
+                                        box.scale_y = curve_size
                                         drawCurve(box, curve, obj)
                                 else:
                                     box = col.box()
-                                    box.scale_y = 0.5
+                                    box.scale_y = curve_size
                                     drawCurve(box, curve, obj)
 
 def drawCurveInspectorObject(context, layout):
+    prefs = get_addon_preferences()
+    curve_size = prefs.inspector_curve_size
     wm = context.window_manager
     for obj in getSelectedObjects(context.scene):
         curve_list = getFCurves(obj)
@@ -121,11 +129,11 @@ def drawCurveInspectorObject(context, layout):
                 if wm.fcurvehelper_show_only_modifiers:
                     if curve.modifiers:
                         box = col.box()
-                        box.scale_y = 0.5
+                        box.scale_y = curve_size
                         drawCurve(box, curve, obj)
                 else:
                     box = col.box()
-                    box.scale_y = 0.5
+                    box.scale_y = curve_size
                     drawCurve(box, curve, obj)
 
 class FCurveHelperInspectorSubPanel(bpy.types.Panel):
