@@ -7,8 +7,8 @@ from .functions import createDummyProperties, getSelectedObjects, getSelectedBon
 class FCurveHelperRemoveModifierInspector(bpy.types.Operator):
     """Tooltip"""
     bl_idname = "fcurvehelper.removemodifierinspector"
-    bl_label = "Remove FCurves modifier"
-    bl_options = {'UNDO'}
+    bl_label = "Remove FCurves modifier from Inspector"
+    bl_options = {'UNDO', 'INTERNAL'}
     
     object_name : bpy.props.StringProperty()
     fcurve_datapath : bpy.props.StringProperty()
