@@ -82,7 +82,16 @@ def setPropertiesFromDataset(datasetin, datasetout):
             try:
                 if wm.fcurvehelper_debug: print("FCurveHelper --- setting %s to %s" % (prop.identifier, str(getattr(datasetout, prop.identifier)))) ###debug
                 setattr(datasetout, '%s' % prop.identifier, getattr(datasetin, prop.identifier))
-            except KeyError:
+            #handle generator array error
+            except ValueError:
+                if wm.fcurvehelper_debug: print("FCurveHelper --- setting %s array after ValueError" % prop.identifier) ###debug
+                propin = getattr(datasetin, prop.identifier)
+                propout = getattr(datasetout, prop.identifier)
+                idx = -1
+                for n in propin:
+                    idx += 1
+                    propout[idx] = n
+            except (KeyError, AttributeError):
                 if wm.fcurvehelper_debug: print("FCurveHelper --- %s not set, KeyError" % prop.identifier) ###debug
                 pass
 
