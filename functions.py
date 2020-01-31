@@ -74,14 +74,14 @@ def redrawContextAreas(context):
     for area in context.screen.areas:
         area.tag_redraw()
         
-# set props from RNA
-def setPropertiesFromDataset(dataset, modifier):
+# set props from dataset
+def setPropertiesFromDataset(datasetin, datasetout):
     wm = bpy.context.window_manager
-    for prop in dataset.bl_rna.properties:
+    for prop in datasetin.bl_rna.properties:
         if not prop.is_readonly and prop.identifier != 'name':
             try:
-                if wm.fcurvehelper_debug: print("FCurveHelper --- setting %s to %s" % (prop.identifier, str(getattr(dataset, prop.identifier)))) ###debug
-                setattr(modifier, '%s' % prop.identifier, getattr(dataset, prop.identifier))
+                if wm.fcurvehelper_debug: print("FCurveHelper --- setting %s to %s" % (prop.identifier, str(getattr(datasetout, prop.identifier)))) ###debug
+                setattr(datasetout, '%s' % prop.identifier, getattr(datasetin, prop.identifier))
             except KeyError:
                 if wm.fcurvehelper_debug: print("FCurveHelper --- %s not set, KeyError" % prop.identifier) ###debug
                 pass
