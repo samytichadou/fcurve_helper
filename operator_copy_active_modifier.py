@@ -1,6 +1,6 @@
 import bpy
 
-from .functions import setPropertiesFromDataset
+from .functions import setPropertiesFromDataset, getActiveModifier
 
 
 class FCurveHelperCopyActiveModifier(bpy.types.Operator):
@@ -22,9 +22,7 @@ class FCurveHelperCopyActiveModifier(bpy.types.Operator):
         fcurve = context.active_editable_fcurve
         if wm.fcurvehelper_debug: print("FCurveHelper --- treating " + fcurve.data_path + str(fcurve.array_index)) ###debug
 
-        for m in fcurve.modifiers:
-            if m.active:
-                modifier = m
+        modifier = getActiveModifier(fcurve)
 
         wm.fcurvehelper_modifiers_list = modifier.type
         if wm.fcurvehelper_debug: print("FCurveHelper --- active modifier : " + modifier.type) ###debug
