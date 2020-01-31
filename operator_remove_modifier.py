@@ -48,18 +48,19 @@ class FCurveHelperRemoveModifier(bpy.types.Operator):
             else: curve_list = getSelectedFCurves(obj)
                 
             for curve in curve_list:
-                if wm.fcurvehelper_debug: print("FCurveHelper --- treating FCurve : " + curve.data_path) ###debug
-                if curve.modifiers:
-                    for mod in curve.modifiers:
-                        if self.remove_all:
-                            if wm.fcurvehelper_debug: print("FCurveHelper --- %s removed" % mod.type) ###debug
-                            curve.modifiers.remove(mod)
-                            curve.modifiers.update()
-                        else:
-                            if mod.type == wm.fcurvehelper_modifiers_list:
+                if not curve.lock:
+                    if wm.fcurvehelper_debug: print("FCurveHelper --- treating FCurve : " + curve.data_path) ###debug
+                    if curve.modifiers:
+                        for mod in curve.modifiers:
+                            if self.remove_all:
                                 if wm.fcurvehelper_debug: print("FCurveHelper --- %s removed" % mod.type) ###debug
                                 curve.modifiers.remove(mod)
                                 curve.modifiers.update()
+                            else:
+                                if mod.type == wm.fcurvehelper_modifiers_list:
+                                    if wm.fcurvehelper_debug: print("FCurveHelper --- %s removed" % mod.type) ###debug
+                                    curve.modifiers.remove(mod)
+                                    curve.modifiers.update()
                 
         ### TODO ### print log
         ### TODO ### return info log
