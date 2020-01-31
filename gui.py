@@ -80,9 +80,9 @@ def drawCurveInspectorBone(context, layout):
     for obj in getSelectedObjects(context.scene):
         if obj.type == 'ARMATURE':
             for bone in obj.data.bones:
-                if (    not wm.fcurvehelper_show_only_selected_bones
+                if (wm.fcurvehelper_show_all_bones
                     or 
-                        (     wm.fcurvehelper_show_only_selected_bones 
+                        (not wm.fcurvehelper_show_all_bones 
                         and bone.select
                         )
                 ):
@@ -156,7 +156,7 @@ class FCurveHelperInspectorSubPanel(bpy.types.Panel):
         row.prop(wm, 'fcurvehelper_fcurve_type')
         row.prop(wm, 'fcurvehelper_show_only_modifiers', text="", icon="MODIFIER_ON")
         split = row.split()
-        split.prop(wm, 'fcurvehelper_show_only_selected_bones', text = "", icon = 'GROUP_BONE')
+        split.prop(wm, 'fcurvehelper_show_all_bones', text = "", icon = 'GROUP_BONE')
                 
         if curve_type == 'OBJECT':
             split.enabled = False
