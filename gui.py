@@ -142,8 +142,6 @@ class FCurveHelperInspectorSubPanel(bpy.types.Panel):
     bl_space_type = 'GRAPH_EDITOR'
     bl_region_type = 'UI'
     bl_category = "Helper"
-    #bl_parent_id = 'FCURVESHELPER_PT_panel'
-    #bl_options = {'DEFAULT_CLOSED'}
 
     @classmethod
     def poll(cls, context):
