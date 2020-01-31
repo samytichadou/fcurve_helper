@@ -4,7 +4,6 @@ from .functions import setPropertiesFromDataset, getActiveModifier
 
 
 class FCurveHelperCopyActiveModifier(bpy.types.Operator):
-    """Tooltip"""
     bl_idname = "fcurvehelper.copy_active_modifier"
     bl_label = "Copy Active Modifier"
     bl_options = {'INTERNAL'}

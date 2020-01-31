@@ -6,7 +6,6 @@ from .functions import *
 
 #operator to add modifier if needed
 class FCurveHelperAddModifier(bpy.types.Operator):
-    """Tooltip"""
     bl_idname = "fcurvehelper.addmodifier"
     bl_label = "Add or Modify FCurves modifier"
     bl_options = {'UNDO'}

@@ -5,7 +5,6 @@ from .functions import createDummyProperties, getSelectedObjects, getSelectedBon
 
 #operator to remove modifier
 class FCurveHelperRemoveModifierInspector(bpy.types.Operator):
-    """Tooltip"""
     bl_idname = "fcurvehelper.removemodifierinspector"
     bl_label = "Remove FCurves modifier from Inspector"
     bl_options = {'UNDO', 'INTERNAL'}

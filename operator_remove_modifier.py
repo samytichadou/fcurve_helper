@@ -5,7 +5,6 @@ from .functions import getSelectedObjects, getSelectedBonesFCurves, getSelectedF
 
 #operator to remove modifier
 class FCurveHelperRemoveModifier(bpy.types.Operator):
-    """Tooltip"""
     bl_idname = "fcurvehelper.removemodifier"
     bl_label = "Remove FCurves modifier"
     bl_options = {'UNDO'}
