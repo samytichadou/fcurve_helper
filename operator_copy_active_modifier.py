@@ -13,7 +13,7 @@ class FCurveHelperCopyActiveModifier(bpy.types.Operator):
 
     @classmethod
     def poll(cls, context):
-        return context.area.type == 'GRAPH_EDITOR' and context.active_editable_fcurve is not None
+        return context.area.type == 'GRAPH_EDITOR' and context.active_editable_fcurve is not None and context.active_editable_fcurve.modifiers
 
     def execute(self, context):
         wm = context.window_manager
