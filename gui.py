@@ -32,6 +32,11 @@ def drawModifier(layout, modifier, mod_index, obj, curve):
 
     row.prop(modifier, 'mute', text="", invert_checkbox=True, emboss=False)
 
+    op = row.operator('fcurvehelper.copy_active_modifier_inspector', text = "", icon = 'COPYDOWN', emboss=False)
+    op.object_name = obj.name
+    op.fcurve_datapath = curve.data_path
+    op.fcurve_arrayindex = curve.array_index
+
     op = row.operator('fcurvehelper.removemodifierinspector', text = "", icon = 'X', emboss=False)
     op.object_name = obj.name
     op.fcurve_datapath = curve.data_path
