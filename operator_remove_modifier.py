@@ -32,7 +32,8 @@ class FCurveHelperRemoveModifier(bpy.types.Operator):
         row = box.row(align=False)
         row.prop(wm, 'fcurvehelper_modifiers_list', text = "")
         row.prop(self, 'remove_all')
-        row.operator("fcurvehelper.copy_active_modifier", text = "Copy Active")
+        op = row.operator("fcurvehelper.copy_active_modifier", text = "Copy Active")
+        op.from_remove = True
 
     def execute(self, context):
         wm = context.window_manager
