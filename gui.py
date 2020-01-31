@@ -168,6 +168,9 @@ class FCurveHelperInspectorSubPanel(bpy.types.Panel):
         split = row.split()
         split.prop(wm, 'fcurvehelper_show_all_bones', text = "", icon = 'GROUP_BONE')
                 
+        row = layout.row(align=True)
+        row.prop(wm, 'fcurvehelper_add_mode', text = "Paste")
+
         if curve_type == 'OBJECT':
             split.enabled = False
             drawCurveInspectorObject(context, layout)

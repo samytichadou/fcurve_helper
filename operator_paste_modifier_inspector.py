@@ -25,18 +25,36 @@ class FCurveHelperPasteModifierInspector(bpy.types.Operator):
         fcurve = returnFCurve(object, self.fcurve_datapath, self.fcurve_arrayindex)
         if wm.fcurvehelper_debug: print("FCurveHelper --- treating " + fcurve.data_path + str(fcurve.array_index)) ###debug
 
-        modifier = fcurve.modifiers.new(type = wm.fcurvehelper_modifiers_list)
+        modifier = ''
+        # add mode
+        if wm.fcurvehelper_add_mode == "ADD":
+            modifier = fcurve.modifiers.new(type = wm.fcurvehelper_modifiers_list)
+        # add and modify mode
+        else:
+            if fcurve.modifiers:
+                chk_mod = 0
+                for mod in fcurve.modifiers:
+                    if mod.type == wm.fcurvehelper_modifiers_list:
+                        modifier = mod
+                        chk_mod = 1
+                        break
+                if chk_mod == 0 and wm.fcurvehelper_add_mode == 'ADD_MODIFY':
+                    modifier = fcurve.modifiers.new(type = wm.fcurvehelper_modifiers_list)
+            else: 
+                if wm.fcurvehelper_add_mode == 'ADD_MODIFY':
+                    modifier = fcurve.modifiers.new(type = wm.fcurvehelper_modifiers_list)
 
         if wm.fcurvehelper_debug: print("FCurveHelper --- added : " + modifier.type) ###debug
-
-        # set props
-        setPropertiesFromDataset( wm.fcurvehelper_commonproperties[0], modifier)
-        if modifier.type == 'GENERATOR':        setPropertiesFromDataset(wm.fcurvehelper_generatorproperties[0], modifier)
-        elif modifier.type == 'FNGENERATOR':    setPropertiesFromDataset(wm.fcurvehelper_fngeneratorproperties[0], modifier)
-        elif modifier.type == 'ENVELOPE':       setPropertiesFromDataset(wm.fcurvehelper_envelopeproperties[0], modifier)
-        elif modifier.type == 'CYCLES':         setPropertiesFromDataset(wm.fcurvehelper_cyclesproperties[0], modifier)
-        elif modifier.type == 'NOISE':          setPropertiesFromDataset(wm.fcurvehelper_noiseproperties[0], modifier)
-        elif modifier.type == 'LIMITS':         setPropertiesFromDataset(wm.fcurvehelper_limitsproperties[0], modifier)
-        elif modifier.type == 'STEPPED':        setPropertiesFromDataset(wm.fcurvehelper_steppedproperties[0], modifier)
+        
+        if modifier != '':
+            # set props
+            setPropertiesFromDataset( wm.fcurvehelper_commonproperties[0], modifier)
+            if modifier.type == 'GENERATOR':        setPropertiesFromDataset(wm.fcurvehelper_generatorproperties[0], modifier)
+            elif modifier.type == 'FNGENERATOR':    setPropertiesFromDataset(wm.fcurvehelper_fngeneratorproperties[0], modifier)
+            elif modifier.type == 'ENVELOPE':       setPropertiesFromDataset(wm.fcurvehelper_envelopeproperties[0], modifier)
+            elif modifier.type == 'CYCLES':         setPropertiesFromDataset(wm.fcurvehelper_cyclesproperties[0], modifier)
+            elif modifier.type == 'NOISE':          setPropertiesFromDataset(wm.fcurvehelper_noiseproperties[0], modifier)
+            elif modifier.type == 'LIMITS':         setPropertiesFromDataset(wm.fcurvehelper_limitsproperties[0], modifier)
+            elif modifier.type == 'STEPPED':        setPropertiesFromDataset(wm.fcurvehelper_steppedproperties[0], modifier)
 
         return {'FINISHED'}
