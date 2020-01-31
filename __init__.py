@@ -117,6 +117,7 @@ def register():
 
     bpy.types.WindowManager.fcurvehelper_show_only_selected_bones = bpy.props.BoolProperty(name = "Only Selected Bones")
     bpy.types.WindowManager.fcurvehelper_show_only_modifiers = bpy.props.BoolProperty(name = "Only FCurves with Modifier")
+    bpy.types.WindowManager.fcurvehelper_is_copied = bpy.props.BoolProperty()
 
     ### HANDLER ###
     bpy.app.handlers.load_post.append(fcurvehelper_startup)
@@ -141,6 +142,7 @@ def unregister():
     del bpy.types.WindowManager.fcurvehelper_fcurve_type
     del bpy.types.WindowManager.fcurvehelper_show_only_selected_bones
     del bpy.types.WindowManager.fcurvehelper_show_only_modifiers
+    del bpy.types.WindowManager.fcurvehelper_is_copied
 
     del bpy.types.WindowManager.fcurvehelper_debug
 
