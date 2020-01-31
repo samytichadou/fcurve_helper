@@ -69,6 +69,11 @@ def drawCurve(layout, curve, obj):
     else: icon = 'UNLOCKED'
     row.prop(curve, 'lock', text="", icon=icon, emboss=False)
 
+    op = row.operator('fcurvehelper.paste_modifier_inspector', text = "", icon = 'PASTEDOWN', emboss = False)
+    op.object_name = obj.name
+    op.fcurve_datapath = curve.data_path
+    op.fcurve_arrayindex = curve.array_index
+
     if curve.modifiers:
         mod_index = -1
         col = layout.column(align=True)

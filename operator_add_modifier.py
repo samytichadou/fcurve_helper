@@ -14,7 +14,7 @@ class FCurveHelperAddModifier(bpy.types.Operator):
         ('ADD_MODIFY', 'Add or Modify Existing', ""),
         ('MODIFY', 'Modify Existing Only', ""),
         ('ADD', 'Add', ""),
-        ]                                            
+        ]                                          
     add_mode : bpy.props.EnumProperty(items=add_mode_items,
                                             name="Mode",
                                             )
