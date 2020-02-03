@@ -1,12 +1,13 @@
 import bpy
 
-from .functions import createDummyProperties, getSelectedObjects, getSelectedBonesFCurves, getSelectedFCurves, redrawContextAreas, returnFCurve
+from .functions import getSelectedObjects, getSelectedBonesFCurves, getSelectedFCurves, redrawContextAreas, returnFCurve
 
 
 #operator to remove modifier
 class FCurveHelperRemoveModifierInspector(bpy.types.Operator):
-    bl_idname = "fcurvehelper.removemodifierinspector"
-    bl_label = "Remove FCurves modifier from Inspector"
+    """Remove this Modifier"""
+    bl_idname = "fcurvehelper.remove_modifier_inspector"
+    bl_label = "Remove Modifiers"
     bl_options = {'UNDO', 'INTERNAL'}
     
     object_name : bpy.props.StringProperty()

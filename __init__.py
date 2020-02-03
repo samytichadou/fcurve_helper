@@ -41,7 +41,7 @@ from .startup_handler import fcurvehelper_startup
 from .properties import *
 from .operator_add_modifier import *
 from .operator_copy_active_modifier import *
-from .operator_copy_active_modifier_inspector import *
+from .operator_copy_modifier_inspector import *
 from .operator_paste_modifier_inspector import *
 from .operator_remove_modifier import *
 from .operator_remove_modifier_from_inspector import *
@@ -63,7 +63,7 @@ classes = (FCurveHelperAddModifier,
             FCurveHelperSteppedProperties,
             FCurveHelperAddonPrefs,
             FCurveHelperCopyActiveModifier,
-            FCurveHelperCopyActiveModifierInspector,
+            FCurveHelperCopyModifierInspector,
             FCurveHelperPasteModifierInspector,
             FCurveHelperRemoveModifier,
             FCurveHelperPanel,

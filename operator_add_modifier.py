@@ -1,13 +1,15 @@
 import bpy
 
 from .draw_functions import *
-from .functions import *
+from .functions import getSelectedObjects, getSelectedBonesFCurves, getSelectedFCurves, setPropertiesFromDataset, redrawContextAreas
+from .startup_handler import createDummyProperties
 
 
 #operator to add modifier if needed
 class FCurveHelperAddModifier(bpy.types.Operator):
-    bl_idname = "fcurvehelper.addmodifier"
-    bl_label = "Add or Modify FCurves modifier"
+    """Add or Modify Modifiers to selected FCurves"""
+    bl_idname = "fcurvehelper.add_modifier"
+    bl_label = "Add Modifiers"
     bl_options = {'UNDO'}
 
     @classmethod

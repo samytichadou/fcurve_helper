@@ -16,10 +16,10 @@ class FCurveHelperPanel(bpy.types.Panel):
         layout = self.layout
 
         row = layout.row()
-        row.operator('fcurvehelper.addmodifier', icon = 'ADD')
+        row.operator('fcurvehelper.add_modifier', icon = 'ADD')
 
         row = layout.row()
-        row.operator('fcurvehelper.removemodifier', icon = 'REMOVE')
+        row.operator('fcurvehelper.remove_modifier', icon = 'REMOVE')
 
 ### INSPECTOR ###
 
@@ -35,13 +35,13 @@ def drawModifier(layout, modifier, mod_index, obj, curve):
 
     row2.prop(modifier, 'mute', text="", invert_checkbox=True, emboss=False)
 
-    op = row2.operator('fcurvehelper.removemodifierinspector', text = "", icon = 'X', emboss=False)
+    op = row2.operator('fcurvehelper.remove_modifier_inspector', text = "", icon = 'X', emboss=False)
     op.object_name = obj.name
     op.fcurve_datapath = curve.data_path
     op.fcurve_arrayindex = curve.array_index
     op.modifier_index = mod_index
 
-    op = row.operator('fcurvehelper.copy_active_modifier_inspector', text = "", icon = 'COPYDOWN', emboss=False)
+    op = row.operator('fcurvehelper.copy_modifier_inspector', text = "", icon = 'COPYDOWN', emboss=False)
     op.object_name = obj.name
     op.fcurve_datapath = curve.data_path
     op.fcurve_arrayindex = curve.array_index

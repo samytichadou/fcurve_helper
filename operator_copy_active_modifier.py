@@ -4,9 +4,10 @@ from .functions import setPropertiesFromDataset, getActiveModifier
 
 
 class FCurveHelperCopyActiveModifier(bpy.types.Operator):
+    """Copy Active Modifier from FCurve"""
     bl_idname = "fcurvehelper.copy_active_modifier"
     bl_label = "Copy Active Modifier"
-    bl_options = {'INTERNAL'}
+    bl_options = {'UNDO', 'INTERNAL'}
 
     from_remove : bpy.props.BoolProperty(default=False)
 

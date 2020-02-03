@@ -4,9 +4,10 @@ from .functions import setPropertiesFromDataset, returnFCurve
 
 
 class FCurveHelperPasteModifierInspector(bpy.types.Operator):
+    """Paste copied Modifier here"""
     bl_idname = "fcurvehelper.paste_modifier_inspector"
-    bl_label = "Paste Copied Modifier"
-    bl_options = {'INTERNAL'}
+    bl_label = "Paste Modifier"
+    bl_options = {'UNDO', 'INTERNAL'}
 
     object_name : bpy.props.StringProperty()
     fcurve_datapath : bpy.props.StringProperty()

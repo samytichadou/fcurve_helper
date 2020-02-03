@@ -3,10 +3,11 @@ import bpy
 from .functions import setPropertiesFromDataset, returnFCurve, getActiveModifier
 
 
-class FCurveHelperCopyActiveModifierInspector(bpy.types.Operator):
-    bl_idname = "fcurvehelper.copy_active_modifier_inspector"
-    bl_label = "Copy Active Modifier"
-    bl_options = {'INTERNAL'}
+class FCurveHelperCopyModifierInspector(bpy.types.Operator):
+    """Copy this Modifier"""
+    bl_idname = "fcurvehelper.copy_modifier_inspector"
+    bl_label = "Copy Modifier"
+    bl_options = {'UNDO', 'INTERNAL'}
 
     object_name : bpy.props.StringProperty()
     fcurve_datapath : bpy.props.StringProperty()

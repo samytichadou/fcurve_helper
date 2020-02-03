@@ -5,8 +5,9 @@ from .functions import getSelectedObjects, getSelectedBonesFCurves, getSelectedF
 
 #operator to remove modifier
 class FCurveHelperRemoveModifier(bpy.types.Operator):
-    bl_idname = "fcurvehelper.removemodifier"
-    bl_label = "Remove FCurves modifier"
+    """Remove selected FCurves Modifiers"""
+    bl_idname = "fcurvehelper.remove_modifier"
+    bl_label = "Remove Modifiers"
     bl_options = {'UNDO'}
     
     remove_all : bpy.props.BoolProperty(name="Remove All")
