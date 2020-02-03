@@ -127,6 +127,10 @@ def register():
     bpy.types.WindowManager.fcurvehelper_add_mode = bpy.props.EnumProperty(items=add_mode_items,
                                             name="Mode",
                                             )
+    bpy.types.WindowManager.fcurvehelper_paste_mode = bpy.props.EnumProperty(items=add_mode_items,
+                                            name="Paste Mode",
+                                            default = 'ADD',
+                                            )
 
     bpy.types.WindowManager.fcurvehelper_show_all_bones = bpy.props.BoolProperty(name = "Show all Bones")
     bpy.types.WindowManager.fcurvehelper_show_only_modifiers = bpy.props.BoolProperty(name = "Show only FCurves with Modifier")
@@ -154,6 +158,7 @@ def unregister():
     del bpy.types.WindowManager.fcurvehelper_modifiers_list
     del bpy.types.WindowManager.fcurvehelper_fcurve_type
     del bpy.types.WindowManager.fcurvehelper_add_mode
+    del bpy.types.WindowManager.fcurvehelper_paste_mode
     del bpy.types.WindowManager.fcurvehelper_show_all_bones
     del bpy.types.WindowManager.fcurvehelper_show_only_modifiers
     del bpy.types.WindowManager.fcurvehelper_is_copied

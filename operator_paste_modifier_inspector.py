@@ -28,7 +28,7 @@ class FCurveHelperPasteModifierInspector(bpy.types.Operator):
 
         modifier = ''
         # add mode
-        if wm.fcurvehelper_add_mode == "ADD":
+        if wm.fcurvehelper_paste_mode == "ADD":
             modifier = fcurve.modifiers.new(type = wm.fcurvehelper_modifiers_list)
         # add and modify mode
         else:
@@ -39,10 +39,10 @@ class FCurveHelperPasteModifierInspector(bpy.types.Operator):
                         modifier = mod
                         chk_mod = 1
                         break
-                if chk_mod == 0 and wm.fcurvehelper_add_mode == 'ADD_MODIFY':
+                if chk_mod == 0 and wm.fcurvehelper_paste_mode == 'ADD_MODIFY':
                     modifier = fcurve.modifiers.new(type = wm.fcurvehelper_modifiers_list)
             else: 
-                if wm.fcurvehelper_add_mode == 'ADD_MODIFY':
+                if wm.fcurvehelper_paste_mode == 'ADD_MODIFY':
                     modifier = fcurve.modifiers.new(type = wm.fcurvehelper_modifiers_list)
 
         if wm.fcurvehelper_debug: print("FCurveHelper --- added : " + modifier.type) ###debug
