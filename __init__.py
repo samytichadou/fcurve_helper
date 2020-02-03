@@ -23,7 +23,7 @@ bl_info = {
  "author": "Samy Tichadou (tonton)",  
  "version": (0, 1),  
  "blender": (2, 82, 0),  
- "location": "Operators",  
+ "location": "Graph Editor",  
  "description": "Utilities to help with FCurves handling",  
   "wiki_url": "https://github.com/samytichadou/fcurve_helper",  
  "tracker_url": "https://github.com/samytichadou/fcurve_helper/issues/new",  
