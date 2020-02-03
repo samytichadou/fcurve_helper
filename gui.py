@@ -30,12 +30,12 @@ def drawModifier(layout, modifier, mod_index, obj, curve):
     row.prop(modifier, 'active', text="", emboss=False)
     row.label(text = modifier.type)
 
-    split = row.split()
-    if curve.lock: split.enabled = False
+    row2 = row.row(align=True)
+    if curve.lock: row2.enabled = False
 
-    split.prop(modifier, 'mute', text="", invert_checkbox=True, emboss=False)
+    row2.prop(modifier, 'mute', text="", invert_checkbox=True, emboss=False)
 
-    op = split.operator('fcurvehelper.removemodifierinspector', text = "", icon = 'X', emboss=False)
+    op = row2.operator('fcurvehelper.removemodifierinspector', text = "", icon = 'X', emboss=False)
     op.object_name = obj.name
     op.fcurve_datapath = curve.data_path
     op.fcurve_arrayindex = curve.array_index
@@ -51,8 +51,8 @@ def drawCurve(layout, curve, obj):
     modifier_size = prefs.inspector_modifier_size
     
     row = layout.row(align=True)
-    
-    #row.label(icon = 'GRAPH')
+    if curve == bpy.context.active_editable_fcurve: row.label(icon = 'RADIOBUT_ON')
+    else: row.label(icon = 'RADIOBUT_OFF')
     #hide
     if curve.hide: icon = 'HIDE_ON'
     else: icon = 'HIDE_OFF'
@@ -62,7 +62,11 @@ def drawCurve(layout, curve, obj):
     else: icon = 'RESTRICT_SELECT_ON'
     row.prop(curve, 'select', text="", icon=icon, toggle=False, emboss=False)
     #name
-    row.label(text = curve.data_path + " " + str(curve.array_index))
+    if "pose.bones[" in curve.data_path:
+        name = curve.data_path.split('"].')[1] + " " + str(curve.array_index)
+    else:
+        name = curve.data_path + " " + str(curve.array_index)
+    row.label(text = name)
     #mute
     if curve.mute: icon = 'CHECKBOX_DEHLT'
     else: icon = 'CHECKBOX_HLT'
@@ -115,7 +119,7 @@ def drawCurveInspectorBone(context, layout):
 
                         if chk_display_obj:
                             row = layout.row(align=True)
-                            row.label(text = obj.name, icon = 'TRIA_RIGHT')
+                            row.label(text = obj.name, icon = 'ARMATURE_DATA')
                             row.label(text = bone.name, icon = 'BONE_DATA')
                             col = layout.column(align=True)
 
@@ -138,7 +142,7 @@ def drawCurveInspectorObject(context, layout):
         curve_list = getFCurves(obj)
         if curve_list:
             row = layout.row(align=True)
-            row.label(text = obj.name, icon = 'TRIA_RIGHT')
+            row.label(text = obj.name, icon = 'MESH_CUBE')
             col = layout.column(align=True)
             for curve in curve_list:
                 if wm.fcurvehelper_show_only_modifiers:
