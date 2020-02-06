@@ -45,7 +45,9 @@ class FCurveHelperPasteModifierInspector(bpy.types.Operator):
                 if wm.fcurvehelper_paste_mode == 'ADD_MODIFY':
                     modifier = fcurve.modifiers.new(type = wm.fcurvehelper_modifiers_list)
 
-        if wm.fcurvehelper_debug: print("FCurveHelper --- added : " + modifier.type) ###debug
+        if wm.fcurvehelper_debug: ###debug
+            if modifier != '': print("FCurveHelper --- added : " + modifier.type) ###debug
+            else: print("FCurveHelper --- no modifier to set") ###debug
         
         if modifier != '':
             # set props
