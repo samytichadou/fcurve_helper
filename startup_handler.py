@@ -30,7 +30,7 @@ def createDummyProperties():
     if not wm.fcurvehelper_limitsproperties: 
         wm.fcurvehelper_limitsproperties.add()
         chk_creation = 1
-    if chk_creation == 1 and wm.fcurvehelper_debug: print("FCurveHelper --- dummy properties created") ###debug
+    if chk_creation == 1: print("FCurveHelper --- dummy properties created") ###debug
 
 @persistent
 def fcurvehelper_startup(scene):
