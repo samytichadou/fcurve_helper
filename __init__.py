@@ -21,7 +21,7 @@ Created by Samy Tichadou (tonton)
 bl_info = {  
  "name": "FCurve Helper",  
  "author": "Samy Tichadou (tonton)",  
- "version": (0, 1),  
+ "version": (1, 0),  
  "blender": (2, 82, 0),  
  "location": "Graph Editor",  
  "description": "Utilities to help with FCurves handling",  
@@ -96,7 +96,7 @@ def register():
     bpy.types.WindowManager.fcurvehelper_steppedproperties = \
         bpy.props.CollectionProperty(type = FCurveHelperSteppedProperties)
     
-    bpy.types.WindowManager.fcurvehelper_debug = bpy.props.BoolProperty(name = "Debug Toggle", default=True)
+    bpy.types.WindowManager.fcurvehelper_debug = bpy.props.BoolProperty(name = "Debug Toggle", default=False)
 
     modifiers_items = [
         ('GENERATOR', 'Generator', ""),
