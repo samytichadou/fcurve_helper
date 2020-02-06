@@ -98,7 +98,8 @@ class FCurveHelperAddModifier(bpy.types.Operator):
                         elif wm.fcurvehelper_modifiers_list == 'NOISE':         setPropertiesFromDataset(wm.fcurvehelper_noiseproperties[0], modifier)
                         elif wm.fcurvehelper_modifiers_list == 'LIMITS':        setPropertiesFromDataset(wm.fcurvehelper_limitsproperties[0], modifier)
                         elif wm.fcurvehelper_modifiers_list == 'STEPPED':       setPropertiesFromDataset(wm.fcurvehelper_steppedproperties[0], modifier)
-                
+                    else: ###debug
+                        if wm.fcurvehelper_debug: print("FCurveHelper --- no modifier to set") ###debug
         ### TODO ### print log
         ### TODO ### return info log
         redrawContextAreas(context)
