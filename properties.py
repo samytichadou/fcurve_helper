@@ -27,7 +27,10 @@ class FCurveHelperGeneratorProperties(bpy.types.PropertyGroup) :
     mode : bpy.props.EnumProperty(name = "Mode", items = mode_items)
     
     poly_order : bpy.props.IntProperty(name = "Poly Order", min = 1, default = 1)
-    coefficients : bpy.props.FloatVectorProperty(name = "Coefficients", size = 32)
+    coefficients : bpy.props.FloatVectorProperty(name = "Coefficients", 
+                                            size = 32,
+                                            default = [0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], 
+                                            )
     
 ## FNGENERATOR
 class FCurveHelperFNGeneratorProperties(bpy.types.PropertyGroup) :
