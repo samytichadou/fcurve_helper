@@ -108,7 +108,5 @@ class FCurveHelperSteppedProperties(bpy.types.PropertyGroup) :
     frame_offset : bpy.props.FloatProperty(name = "Offset")
     
     use_frame_start : bpy.props.BoolProperty(name = "Use Start Frame")
-    #frame_start : bpy.props.FloatProperty(name = "Start Frame")
     
     use_frame_end : bpy.props.BoolProperty(name = "Use End Frame")
-    #frame_end : bpy.props.FloatProperty(name = "End Frame")
