@@ -4,7 +4,7 @@ import bpy
 # COMMON PROPS
 def drawCommonProperties(layout, context):
     common_props = context.window_manager.fcurvehelper_commonproperties[0]
-    
+
     row = layout.row(align=False)
     col = row.column(align=True)
     if common_props.use_restricted_range: icon = 'DISCLOSURE_TRI_DOWN'
@@ -17,6 +17,8 @@ def drawCommonProperties(layout, context):
         row = col.row(align=True)
         row.prop(common_props, 'blend_in')
         row.prop(common_props, 'blend_out')
+        row = col.row(align=True)
+        row.label(text = "Frame Range settings could be ignored if unconsistent")
         
     row = layout.row(align=False)
     col = row.column(align=True)
@@ -150,6 +152,7 @@ def drawLimitsProperties(layout, context):
 # STEPPED PROPS
 def drawSteppedProperties(layout, context):
     stepped_props = context.window_manager.fcurvehelper_steppedproperties[0]
+    common_props = context.window_manager.fcurvehelper_commonproperties[0]
     
     col = layout.column()
     col.prop(stepped_props, 'frame_step')
@@ -159,10 +162,10 @@ def drawSteppedProperties(layout, context):
     col.prop(stepped_props, 'use_frame_start')
     row = col.row()
     if not stepped_props.use_frame_start: row.enabled = False
-    row.prop(stepped_props, 'frame_start')
+    row.prop(common_props, 'frame_start')
     
     col = layout.column(align=True)
     col.prop(stepped_props, 'use_frame_end')
     row = col.row()
     if not stepped_props.use_frame_end: row.enabled = False
-    row.prop(stepped_props, 'frame_end')
+    row.prop(common_props, 'frame_end')
